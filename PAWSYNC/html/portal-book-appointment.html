@@ -55,16 +55,7 @@
 
         <fieldset class="fieldset" id="pet-choice">
           <legend class="form-group__label">Select Your Registered Pet <span class="form-group__required" aria-hidden="true">*</span></legend>
-          <div class="choice-list">
-            <!-- Sample pets -->
-            <label class="choice">
-              <input type="radio" name="pet" value="Dagul" required aria-describedby="pet-error">
-              <span class="choice__title">Dagul</span>
-            </label>
-            <label class="choice">
-              <input type="radio" name="pet" value="Luna" required aria-describedby="pet-error">
-              <span class="choice__title">Luna</span>
-            </label>
+          <div class="choice-list" id="pet-choice-list">
           </div>
           <p class="form-group__error" id="pet-error" hidden>Choose a pet, or switch on "Register a new pet".</p>
         </fieldset>
@@ -391,6 +382,19 @@
         if (!validate(step)) { return; }
         if (step < TOTAL) { showStep(step + 1, true); return; }
         /* Step 4: confirmation */
+        var pet = form.querySelector('input[name="pet"]:checked');
+        var service = form.querySelector('input[name="service"]:checked');
+        var appointment = {
+          pet: pet ? pet.value : '',
+          service: service ? service.value : '',
+          date: selectedDate,
+          time: timeSelect.value,
+          status: 'Confirmed',
+          createdAt: new Date().toISOString()
+        };
+        var appointments = PawSyncData.get('pawsyncAppointments');
+        appointments.push(appointment);
+        PawSyncData.set('pawsyncAppointments', appointments);
         document.getElementById('booking-actions').hidden = true;
         items.forEach(function (li) { li.classList.add('is-done'); li.removeAttribute('aria-current'); });
         var success = document.getElementById('booking-success');
@@ -399,6 +403,31 @@
       });
  
       showStep(1, false);
+    })();
+  </script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/pawsync-storage.js"></script>
+  <script>
+    (function () {
+      var petList = document.getElementById('pet-choice-list');
+      var pets = PawSyncData.get('pawsyncPets');
+      var noPets = document.getElementById('no-pets');
+      var missing = document.getElementById('pet-missing');
+
+      pets.forEach(function (pet) {
+        var label = document.createElement('label');
+        label.className = 'choice';
+        label.innerHTML = '<input type="radio" name="pet" value="' +
+          PawSyncData.escapeHtml(pet.name) +
+          '" required aria-describedby="pet-error"><span class="choice__title">' +
+          PawSyncData.escapeHtml(pet.name) + '</span>';
+        petList.appendChild(label);
+      });
+
+      if (!pets.length) {
+        noPets.hidden = false;
+        missing.hidden = true;
+      }
     })();
   </script>
 </body>

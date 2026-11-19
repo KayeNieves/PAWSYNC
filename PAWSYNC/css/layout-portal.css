@@ -27,6 +27,20 @@
 .portal-main { 
     padding-block: var(--space-4); 
 }
+.portal-header__inner nav {
+  flex: 1;
+}
+.portal-nav__list {
+  justify-content: center;
+}
+.portal-main {
+  min-height: calc(100vh - 140px);
+}
+.portal-main > .grid,
+.portal-main > .stack {
+  max-width: 72rem;
+  margin-inline: auto;
+}
 /* Booking form */
 .booking-form {
   max-width: 56rem;

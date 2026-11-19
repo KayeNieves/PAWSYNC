@@ -37,7 +37,7 @@
       <main id="main">
         <p class="breadcrumb"><a href="staff.html">Staff Dashboard</a> / Clients</p>
         <h1 class="page-title">Clients</h1>
-        <p class="text-muted">Maintain contact details and the pets registered to each client. This static demo does not submit or save entered values. Use your browser's print command to print this page.</p>
+        <p class="text-muted">Maintain contact details and the pets registered to each client. Entries are saved locally in this browser.</p>
         <details class="card">
           <summary><strong>Add a client</strong></summary>
           <fieldset class="form stack staff-entry">
@@ -47,7 +47,7 @@
             <div class="form-group"><label class="form-group__label" for="client-phone">Phone</label><input class="form-input" id="client-phone" name="Phone" type="tel" required></div>
             <div class="form-group"><label class="form-group__label" for="client-email">Email</label><input class="form-input" id="client-email" name="Email" type="email" required></div>
             <div class="form-group"><label class="form-group__label" for="client-pets">Pets</label><input class="form-input" id="client-pets" name="Pets" placeholder="e.g. Milo, Luna" required></div>
-            <p class="form-group__help">Values entered here are not submitted or saved.</p>
+            <p class="form-group__help">Saved locally in this browser.</p>
           </fieldset>
         </details>
         <section class="stack" aria-labelledby="clients-heading">
@@ -66,5 +66,8 @@
       </main>
     </div>
   </div>
+  <script src="../js/auth.js"></script>
+  <script src="../js/pawsync-storage.js"></script>
+  <script src="../js/staff-data.js"></script>
 </body>
 </html>

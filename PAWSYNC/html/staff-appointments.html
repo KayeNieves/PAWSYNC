@@ -37,7 +37,7 @@
       <main id="main">
         <p class="breadcrumb"><a href="staff.html">Staff Dashboard</a> / Appointments</p>
         <h1 class="page-title">Appointments</h1>
-        <p class="text-muted">Schedule and review clinic visits. Dates and times use your local timezone. This static demo does not submit or save entered values. Use your browser's print command to print this page.</p>
+        <p class="text-muted">Schedule and review clinic visits. Dates and times use your local timezone. Entries are saved locally in this browser.</p>
         <details class="card">
           <summary><strong>Schedule an appointment</strong></summary>
           <fieldset class="form stack staff-entry">
@@ -48,7 +48,7 @@
             <div class="form-group"><label class="form-group__label" for="appointment-client">Client</label><input class="form-input" id="appointment-client" name="Client" required></div>
             <div class="form-group"><label class="form-group__label" for="appointment-service">Service</label><input class="form-input" id="appointment-service" name="Service" required></div>
             <div class="form-group"><label class="form-group__label" for="appointment-status">Status</label><select class="form-select" id="appointment-status" name="Status" required><option>Confirmed</option><option>Waiting</option><option>Completed</option><option>Cancelled</option></select></div>
-            <p class="form-group__help">Values entered here are not submitted or saved.</p>
+            <p class="form-group__help">Saved locally in this browser.</p>
           </fieldset>
         </details>
         <section class="stack" aria-labelledby="schedule-heading">
@@ -67,5 +67,8 @@
       </main>
     </div>
   </div>
+  <script src="../js/auth.js"></script>
+  <script src="../js/pawsync-storage.js"></script>
+  <script src="../js/staff-data.js"></script>
 </body>
 </html>

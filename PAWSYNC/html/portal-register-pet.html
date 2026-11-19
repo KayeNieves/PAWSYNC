@@ -192,5 +192,55 @@
     </form>
   </main>
 
+  <script src="../js/auth.js"></script>
+  <script src="../js/pawsync-storage.js"></script>
+  <script>
+    (function () {
+      var form = document.getElementById('register-form');
+      var ownerName = document.getElementById('owner-name');
+      var ownerContact = document.getElementById('owner-contact');
+      var session = JSON.parse(sessionStorage.getItem('pawsyncSession') || 'null');
+      if (session && session.role === 'owner') {
+        ownerName.value = session.name;
+      }
+
+      form.addEventListener('submit', function (event) {
+        event.preventDefault();
+        var required = ['pet-name', 'pet-species', 'pet-breed', 'pet-birthday', 'pet-color', 'owner-name', 'owner-address', 'owner-contact'];
+        var valid = true;
+        required.forEach(function (id) {
+          var input = document.getElementById(id);
+          if (!input.value.trim()) {
+            valid = false;
+            input.setAttribute('aria-invalid', 'true');
+          } else {
+            input.removeAttribute('aria-invalid');
+          }
+        });
+        var gender = form.querySelector('input[name="gender"]:checked');
+        if (!gender) valid = false;
+        if (!valid) return;
+
+        var pet = {
+          name: document.getElementById('pet-name').value.trim(),
+          species: document.getElementById('pet-species').value,
+          breed: document.getElementById('pet-breed').value.trim(),
+          gender: gender.value,
+          birthday: document.getElementById('pet-birthday').value,
+          color: document.getElementById('pet-color').value.trim(),
+          appearance: document.getElementById('pet-appearance').value.trim(),
+          ownerName: ownerName.value.trim(),
+          ownerAddress: document.getElementById('owner-address').value.trim(),
+          ownerContact: ownerContact.value.trim()
+        };
+        var pets = PawSyncData.get('pawsyncPets');
+        pets.push(pet);
+        PawSyncData.set('pawsyncPets', pets);
+        document.getElementById('register-actions').hidden = true;
+        document.getElementById('register-success').hidden = false;
+        document.getElementById('register-success').scrollIntoView({ behavior: 'smooth', block: 'center' });
+      });
+    })();
+  </script>
 </body>
 </html>

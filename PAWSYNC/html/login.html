@@ -46,6 +46,19 @@
 
         <div role="tabpanel" id="panel-login" aria-labelledby="tab-login">
           <form class="form" id="login-form" action="#" method="post" novalidate>
+            <fieldset class="form-group">
+              <legend class="form-group__label">Log in as <span class="form-group__required" aria-hidden="true">*</span></legend>
+              <div class="form-check">
+                <input type="radio" id="login-role-owner" name="login-role" value="owner" required>
+                <label for="login-role-owner">Pet owner</label>
+              </div>
+              <div class="form-check">
+                <input type="radio" id="login-role-staff" name="login-role" value="staff" required>
+                <label for="login-role-staff">Clinic staff</label>
+              </div>
+              <p class="form-group__error" id="login-role-error" hidden></p>
+            </fieldset>
+
             <div class="form-group">
               <label class="form-group__label" for="login-id">Email or mobile number <span class="form-group__required" aria-hidden="true">*</span></label>
               <input class="form-input" type="text" id="login-id" name="login-id" autocomplete="username"
@@ -206,10 +219,19 @@
       e.preventDefault();
       const id = document.getElementById('login-id');
       const pw = document.getElementById('login-password');
+      const role = document.querySelector('input[name="login-role"]:checked');
+      const roleError = document.getElementById('login-role-error');
       let valid = true;
 
       clearError(id); clearError(pw);
+      roleError.hidden = true;
+      roleError.textContent = '';
 
+      if (!role) {
+        roleError.textContent = 'Choose whether you are a pet owner or clinic staff.';
+        roleError.hidden = false;
+        valid = false;
+      }
       if (id.value.trim() === '') {
         setError(id, 'Enter your email or mobile number.'); valid = false;
       }
@@ -218,6 +240,35 @@
       }
       if (!valid) return;
 
+      const identifier = id.value.trim().toLowerCase();
+      const password = pw.value;
+      const staffAccount = identifier === 'clinicstaff@gmail.com' && password === '12345678'
+        ? { name: 'Clinic Staff' }
+        : null;
+      const ownerAccounts = JSON.parse(localStorage.getItem('pawsyncOwnerAccounts') || '[]');
+      const ownerAccount = ownerAccounts.find(function (account) {
+        return account.email.toLowerCase() === identifier || account.mobile === identifier;
+      });
+
+      if (role.value === 'staff' && staffAccount) {
+        sessionStorage.setItem('pawsyncSession', JSON.stringify({
+          role: 'staff',
+          name: staffAccount.name
+        }));
+        window.location.href = 'staff.html';
+        return;
+      }
+
+      if (role.value === 'owner' && ownerAccount && password === ownerAccount.password) {
+        sessionStorage.setItem('pawsyncSession', JSON.stringify({
+          role: 'owner',
+          name: ownerAccount.name
+        }));
+        window.location.href = 'portal-dashboard.html';
+        return;
+      }
+
+      setError(pw, 'Email/mobile number or password is incorrect.');
     });
 
     document.getElementById('register-form').addEventListener('submit', function (e) {
@@ -252,6 +303,29 @@
       }
       if (!valid) return;
 
+      const account = {
+        name: name.value.trim(),
+        email: email.value.trim().toLowerCase(),
+        mobile: mobile.value.trim(),
+        password: pw.value
+      };
+      const ownerAccounts = JSON.parse(localStorage.getItem('pawsyncOwnerAccounts') || '[]');
+      const duplicate = ownerAccounts.some(function (existing) {
+        return existing.email === account.email || existing.mobile === account.mobile;
+      });
+
+      if (duplicate) {
+        setError(email, 'An account with this email or mobile number already exists.');
+        return;
+      }
+
+      ownerAccounts.push(account);
+      localStorage.setItem('pawsyncOwnerAccounts', JSON.stringify(ownerAccounts));
+      sessionStorage.setItem('pawsyncSession', JSON.stringify({
+        role: 'owner',
+        name: account.name
+      }));
+      window.location.href = 'portal-dashboard.html';
     });
   </script>
 </body>

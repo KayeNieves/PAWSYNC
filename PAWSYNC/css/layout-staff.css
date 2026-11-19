@@ -65,6 +65,30 @@
 .staff-entry legend {
   padding: 0;
 }
+.staff-entry {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-2);
+}
+.staff-entry legend,
+.staff-entry .form-group__help,
+.staff-entry .btn {
+  grid-column: 1 / -1;
+}
+.staff-entry .form-group {
+  margin: 0;
+}
+
+@media (max-width: 640px) {
+  .staff-entry {
+    grid-template-columns: 1fr;
+  }
+  .staff-entry legend,
+  .staff-entry .form-group__help,
+  .staff-entry .btn {
+    grid-column: 1;
+  }
+}
 
 @media (min-width: 1024px) {
   .sidebar { position: fixed; 

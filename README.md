@@ -9,3 +9,6 @@
 ### MARALIT, TRISHIA ANNE
 ### DELA CRUZ, GRACE
 
+Added clinic staff account:
+Email: clinicstaff@gmail.com
+Password: 12345678

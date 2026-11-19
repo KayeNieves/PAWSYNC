@@ -37,7 +37,7 @@
       <main id="main">
         <p class="breadcrumb"><a href="staff.html">Staff Dashboard</a> / Billing &amp; Sales</p>
         <h1 class="page-title">Billing &amp; Sales</h1>
-        <p class="text-muted">Track invoices and payment status. Amounts are shown in Philippine pesos (PHP). This static demo does not submit or save entered values. Use your browser's print command to print this page.</p>
+        <p class="text-muted">Track invoices and payment status. Amounts are shown in Philippine pesos (PHP). Entries are saved locally in this browser.</p>
         <details class="card">
           <summary><strong>Record an invoice</strong></summary>
           <fieldset class="form stack staff-entry">
@@ -47,7 +47,7 @@
             <div class="form-group"><label class="form-group__label" for="invoice-date">Date</label><input class="form-input" id="invoice-date" name="Date" type="date" required></div>
             <div class="form-group"><label class="form-group__label" for="invoice-total">Total (PHP)</label><input class="form-input" id="invoice-total" name="Total (PHP)" type="number" min="0" step="0.01" required></div>
             <div class="form-group"><label class="form-group__label" for="invoice-status">Status</label><select class="form-select" id="invoice-status" name="Status" required><option>Unpaid</option><option>Paid</option><option>Partially paid</option><option>Voided</option></select></div>
-            <p class="form-group__help">Values entered here are not submitted or saved.</p>
+            <p class="form-group__help">Saved locally in this browser.</p>
           </fieldset>
         </details>
         <section class="stack" aria-labelledby="invoices-heading">
@@ -66,5 +66,8 @@
       </main>
     </div>
   </div>
+  <script src="../js/auth.js"></script>
+  <script src="../js/pawsync-storage.js"></script>
+  <script src="../js/staff-data.js"></script>
 </body>
 </html>

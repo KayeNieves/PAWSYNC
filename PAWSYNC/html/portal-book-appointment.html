@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="../css/base.css">
   <link rel="stylesheet" href="../css/components.css">
   <link rel="stylesheet" href="../css/layout-portal.css">
+  <script src="../JS/pawsync.js" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to main content</a>
@@ -117,7 +118,7 @@
           <div class="booking-date__fields">
             <div class="form-group">
               <label class="form-group__label" for="appt-date">Appointment date <span class="form-group__required" aria-hidden="true">*</span></label>
-              <input class="form-input" type="date" id="appt-date" name="date" min="2026-10-13" max="2026-10-31" required aria-describedby="date-help date-error">
+              <input class="form-input" type="date" id="appt-date" name="date" required aria-describedby="date-help date-error">
               <p class="form-group__help" id="date-help">Pick a day on the calendar or type the date here.</p>
               <p class="form-group__error" id="date-error" hidden>Choose an available date.</p>
             </div>
@@ -158,42 +159,10 @@
                 <span class="calendar__dow"><abbr title="Friday">Fri</abbr></span>
                 <span class="calendar__dow"><abbr title="Saturday">Sat</abbr></span>
  
-                <span aria-hidden="true"></span><span aria-hidden="true"></span><span aria-hidden="true"></span><span aria-hidden="true"></span>
  
                 <!-- Past days -->
-                <button type="button" class="calendar__day is-past" data-date="2026-10-01" aria-disabled="true" aria-label="October 1, 2026, past"><span class="calendar__num">1</span></button>
-                <button type="button" class="calendar__day is-past" data-date="2026-10-02" aria-disabled="true" aria-label="October 2, 2026, past"><span class="calendar__num">2</span></button>
-                <button type="button" class="calendar__day is-past" data-date="2026-10-03" aria-disabled="true" aria-label="October 3, 2026, past"><span class="calendar__num">3</span></button>
-                <button type="button" class="calendar__day is-past" data-date="2026-10-04" aria-disabled="true" aria-label="October 4, 2026, past"><span class="calendar__num">4</span></button>
-                <button type="button" class="calendar__day is-past" data-date="2026-10-05" aria-disabled="true" aria-label="October 5, 2026, past"><span class="calendar__num">5</span></button>
-                <button type="button" class="calendar__day is-past" data-date="2026-10-06" aria-disabled="true" aria-label="October 6, 2026, past"><span class="calendar__num">6</span></button>
-                <button type="button" class="calendar__day is-past" data-date="2026-10-07" aria-disabled="true" aria-label="October 7, 2026, past"><span class="calendar__num">7</span></button>
-                <button type="button" class="calendar__day is-past" data-date="2026-10-08" aria-disabled="true" aria-label="October 8, 2026, past"><span class="calendar__num">8</span></button>
-                <button type="button" class="calendar__day is-past" data-date="2026-10-09" aria-disabled="true" aria-label="October 9, 2026, past"><span class="calendar__num">9</span></button>
-                <button type="button" class="calendar__day is-past" data-date="2026-10-10" aria-disabled="true" aria-label="October 10, 2026, past"><span class="calendar__num">10</span></button>
-                <button type="button" class="calendar__day is-past" data-date="2026-10-11" aria-disabled="true" aria-label="October 11, 2026, past"><span class="calendar__num">11</span></button>
-                <button type="button" class="calendar__day is-past" data-date="2026-10-12" aria-disabled="true" aria-label="October 12, 2026, past"><span class="calendar__num">12</span></button>
  
                 <!-- Open and full days. Full days: .is-full, aria-disabled="true" and the visible word "Full". -->
-                <button type="button" class="calendar__day" data-date="2026-10-13" aria-pressed="false" aria-label="October 13, 2026"><span class="calendar__num">13</span></button>
-                <button type="button" class="calendar__day" data-date="2026-10-14" aria-pressed="false" aria-label="October 14, 2026"><span class="calendar__num">14</span></button>
-                <button type="button" class="calendar__day is-full" data-date="2026-10-15" aria-disabled="true" aria-label="October 15, 2026, full"><span class="calendar__num">15</span><span class="calendar__flag">Full</span></button>
-                <button type="button" class="calendar__day is-full" data-date="2026-10-16" aria-disabled="true" aria-label="October 16, 2026, full"><span class="calendar__num">16</span><span class="calendar__flag">Full</span></button>
-                <button type="button" class="calendar__day" data-date="2026-10-17" aria-pressed="false" aria-label="October 17, 2026"><span class="calendar__num">17</span></button>
-                <button type="button" class="calendar__day" data-date="2026-10-18" aria-pressed="false" aria-label="October 18, 2026"><span class="calendar__num">18</span></button>
-                <button type="button" class="calendar__day" data-date="2026-10-19" aria-pressed="false" aria-label="October 19, 2026"><span class="calendar__num">19</span></button>
-                <button type="button" class="calendar__day" data-date="2026-10-20" aria-pressed="false" aria-label="October 20, 2026"><span class="calendar__num">20</span></button>
-                <button type="button" class="calendar__day" data-date="2026-10-21" aria-pressed="false" aria-label="October 21, 2026"><span class="calendar__num">21</span></button>
-                <button type="button" class="calendar__day is-full" data-date="2026-10-22" aria-disabled="true" aria-label="October 22, 2026, full"><span class="calendar__num">22</span><span class="calendar__flag">Full</span></button>
-                <button type="button" class="calendar__day" data-date="2026-10-23" aria-pressed="false" aria-label="October 23, 2026"><span class="calendar__num">23</span></button>
-                <button type="button" class="calendar__day" data-date="2026-10-24" aria-pressed="false" aria-label="October 24, 2026"><span class="calendar__num">24</span></button>
-                <button type="button" class="calendar__day" data-date="2026-10-25" aria-pressed="false" aria-label="October 25, 2026"><span class="calendar__num">25</span></button>
-                <button type="button" class="calendar__day" data-date="2026-10-26" aria-pressed="false" aria-label="October 26, 2026"><span class="calendar__num">26</span></button>
-                <button type="button" class="calendar__day" data-date="2026-10-27" aria-pressed="false" aria-label="October 27, 2026"><span class="calendar__num">27</span></button>
-                <button type="button" class="calendar__day" data-date="2026-10-28" aria-pressed="false" aria-label="October 28, 2026"><span class="calendar__num">28</span></button>
-                <button type="button" class="calendar__day" data-date="2026-10-29" aria-pressed="false" aria-label="October 29, 2026"><span class="calendar__num">29</span></button>
-                <button type="button" class="calendar__day" data-date="2026-10-30" aria-pressed="false" aria-label="October 30, 2026"><span class="calendar__num">30</span></button>
-                <button type="button" class="calendar__day" data-date="2026-10-31" aria-pressed="false" aria-label="October 31, 2026"><span class="calendar__num">31</span></button>
               </div>
  
               <ul class="calendar__legend">
@@ -239,9 +208,10 @@
     /* Prototype script*/
     (function () {
       var TOTAL = 4;
-      var TODAY = '2026-10-13';
-      var LAST = '2026-10-31';
-      var FULL = ['2026-10-15', '2026-10-16', '2026-10-22'];
+      var now = new Date();
+      var TODAY = now.getFullYear() + '-' + String(now.getMonth() + 1).padStart(2, '0') + '-' + String(now.getDate()).padStart(2, '0');
+      var LAST = now.getFullYear() + '-12-31'; /* the calendar follows the current year */
+      function isFull(iso) { return !!(window.PawSyncCal && window.PawSyncCal.isFull(iso)); }
       var step = 1;
       var selectedDate = null;
  
@@ -253,10 +223,12 @@
       var nextBtn = document.getElementById('next-btn');
       var dateInput = document.getElementById('appt-date');
       var timeSelect = document.getElementById('appt-time');
-      var days = document.querySelectorAll('.calendar__day');
+      function getDays() { return document.querySelectorAll('.calendar__day'); }
       var fullAlert = document.getElementById('full-alert');
       var fullMessage = document.getElementById('full-message');
       var useNextBtn = document.getElementById('use-next-date');
+      dateInput.min = TODAY;
+      dateInput.max = LAST;
  
       function longDate(iso) {
         return new Date(iso + 'T00:00:00').toLocaleDateString('en-PH',
@@ -266,11 +238,11 @@
         return new Date(iso + 'T00:00:00').toLocaleDateString('en-PH', { month: 'long', day: 'numeric' });
       }
       function bookable(iso) {
-        return iso >= TODAY && iso <= LAST && FULL.indexOf(iso) === -1;
+        return iso >= TODAY && iso <= LAST && !isFull(iso);
       }
       function nextAvailable(iso) {
         var d = new Date(iso + 'T00:00:00');
-        for (var i = 0; i < 40; i++) {
+        for (var i = 0; i < 400; i++) {
           d.setDate(d.getDate() + 1);
           var next = d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
           if (next > LAST) return null;
@@ -306,18 +278,19 @@
  
       function setSelected(iso) {
         selectedDate = iso;
-        days.forEach(function (btn) {
+        getDays().forEach(function (btn) {
           var on = iso && btn.getAttribute('data-date') === iso;
           btn.classList.toggle('is-selected', !!on);
           if (btn.hasAttribute('aria-pressed')) { btn.setAttribute('aria-pressed', on ? 'true' : 'false'); }
         });
         if (iso) { dateInput.value = iso; }
+        if (window.PawSyncCal) { window.PawSyncCal.sync(iso); }
       }
  
       function offerNext(iso) {
         var next = nextAvailable(iso);
         fullMessage.textContent = longDate(iso) + ' has reached the 15-patient limit.' +
-          (next ? ' The next available date is ' + longDate(next) + '.' : ' No other dates are open this month. Please call the clinic.');
+          (next ? ' The next available date is ' + longDate(next) + '.' : ' No other dates are open this year. Please call the clinic.');
         useNextBtn.hidden = !next;
         if (next) {
           useNextBtn.textContent = 'Choose ' + shortDate(next);
@@ -332,19 +305,18 @@
         if (!iso) { setSelected(null); return; }
         if (iso < TODAY || iso > LAST) {
           setSelected(null);
-          document.getElementById('date-error').textContent = 'Choose a date between October 13 and October 31, 2026.';
+          document.getElementById('date-error').textContent = 'Choose a date between ' + shortDate(TODAY) + ' and ' + shortDate(LAST) + ', ' + LAST.slice(0, 4) + '.';
           showError('date-error', true);
           return;
         }
-        if (FULL.indexOf(iso) !== -1) { setSelected(null); offerNext(iso); return; }
+        if (isFull(iso)) { setSelected(null); offerNext(iso); return; }
         setSelected(iso);
       }
  
-      days.forEach(function (btn) {
-        btn.addEventListener('click', function () {
-          if (btn.classList.contains('is-past')) { return; }
-          handleDate(btn.getAttribute('data-date'));
-        });
+      document.querySelector('.calendar').addEventListener('click', function (e) {
+        var btn = e.target.closest('.calendar__day');
+        if (!btn || btn.classList.contains('is-past')) { return; }
+        handleDate(btn.getAttribute('data-date'));
       });
       dateInput.addEventListener('change', function () { handleDate(dateInput.value); });
       useNextBtn.addEventListener('click', function () { handleDate(useNextBtn.getAttribute('data-date')); });
@@ -354,7 +326,8 @@
         if (n === 1) {
           ok = !!form.querySelector('input[name="pet"]:checked');
           showError('pet-error', !ok);
-          if (!ok) { form.querySelector('input[name="pet"]').focus(); }
+          var firstPet = form.querySelector('input[name="pet"]');
+          if (!ok && firstPet) { firstPet.focus(); }
         } else if (n === 2) {
           ok = !!form.querySelector('input[name="service"]:checked');
           showError('service-error', !ok);
@@ -382,19 +355,6 @@
         if (!validate(step)) { return; }
         if (step < TOTAL) { showStep(step + 1, true); return; }
         /* Step 4: confirmation */
-        var pet = form.querySelector('input[name="pet"]:checked');
-        var service = form.querySelector('input[name="service"]:checked');
-        var appointment = {
-          pet: pet ? pet.value : '',
-          service: service ? service.value : '',
-          date: selectedDate,
-          time: timeSelect.value,
-          status: 'Confirmed',
-          createdAt: new Date().toISOString()
-        };
-        var appointments = PawSyncData.get('pawsyncAppointments');
-        appointments.push(appointment);
-        PawSyncData.set('pawsyncAppointments', appointments);
         document.getElementById('booking-actions').hidden = true;
         items.forEach(function (li) { li.classList.add('is-done'); li.removeAttribute('aria-current'); });
         var success = document.getElementById('booking-success');
@@ -403,31 +363,6 @@
       });
  
       showStep(1, false);
-    })();
-  </script>
-  <script src="../js/auth.js"></script>
-  <script src="../js/pawsync-storage.js"></script>
-  <script>
-    (function () {
-      var petList = document.getElementById('pet-choice-list');
-      var pets = PawSyncData.get('pawsyncPets');
-      var noPets = document.getElementById('no-pets');
-      var missing = document.getElementById('pet-missing');
-
-      pets.forEach(function (pet) {
-        var label = document.createElement('label');
-        label.className = 'choice';
-        label.innerHTML = '<input type="radio" name="pet" value="' +
-          PawSyncData.escapeHtml(pet.name) +
-          '" required aria-describedby="pet-error"><span class="choice__title">' +
-          PawSyncData.escapeHtml(pet.name) + '</span>';
-        petList.appendChild(label);
-      });
-
-      if (!pets.length) {
-        noPets.hidden = false;
-        missing.hidden = true;
-      }
     })();
   </script>
 </body>

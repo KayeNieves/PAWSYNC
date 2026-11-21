@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="../css/base.css">
   <link rel="stylesheet" href="../css/components.css">
   <link rel="stylesheet" href="../css/layout-portal.css">
+  <script src="../JS/pawsync.js" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to main content</a>
@@ -34,26 +35,5 @@
     <p>Your upcoming and past appointments will appear here.</p>
     <p><a class="btn btn--primary" href="portal-book-appointment.html">Book an appointment</a></p>
   </main>
-  <script src="../js/auth.js"></script>
-  <script src="../js/pawsync-storage.js"></script>
-  <script>
-    (function () {
-      var appointments = PawSyncData.get('pawsyncAppointments');
-      if (!appointments.length) return;
-      var main = document.querySelector('main');
-      var grid = document.createElement('div');
-      grid.className = 'grid grid--2';
-      appointments.forEach(function (appointment) {
-        var card = document.createElement('article');
-        card.className = 'card';
-        card.innerHTML = '<h2 class="card__title">' + PawSyncData.escapeHtml(appointment.pet) +
-          '</h2><p>' + PawSyncData.escapeHtml(appointment.service) +
-          '</p><p class="text-muted">' + PawSyncData.escapeHtml(appointment.date) +
-          ' at ' + PawSyncData.escapeHtml(appointment.time) + '</p>';
-        grid.appendChild(card);
-      });
-      main.appendChild(grid);
-    })();
-  </script>
 </body>
 </html>

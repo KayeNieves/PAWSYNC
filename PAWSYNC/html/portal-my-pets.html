@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="../css/base.css">
   <link rel="stylesheet" href="../css/components.css">
   <link rel="stylesheet" href="../css/layout-portal.css">
+  <script src="../JS/pawsync.js" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to main content</a>
@@ -34,27 +35,5 @@
     <p>Your registered pets will appear here.</p>
     <p><a class="btn btn--primary" href="portal-register-pet.html">Register a pet</a></p>
   </main>
-  <script src="../js/auth.js"></script>
-  <script src="../js/pawsync-storage.js"></script>
-  <script>
-    (function () {
-      var pets = PawSyncData.get('pawsyncPets');
-      if (!pets.length) return;
-      var main = document.querySelector('main');
-      var grid = document.createElement('div');
-      grid.className = 'grid grid--2';
-      pets.forEach(function (pet) {
-        var card = document.createElement('article');
-        card.className = 'card';
-        card.innerHTML = '<h2 class="card__title">' + PawSyncData.escapeHtml(pet.name) +
-          '</h2><p>' + PawSyncData.escapeHtml(pet.species) + ' / ' +
-          PawSyncData.escapeHtml(pet.breed) + '</p><p class="text-muted">' +
-          PawSyncData.escapeHtml(pet.gender) + ' - ' +
-          PawSyncData.escapeHtml(pet.birthday) + '</p>';
-        grid.appendChild(card);
-      });
-      main.appendChild(grid);
-    })();
-  </script>
 </body>
 </html>

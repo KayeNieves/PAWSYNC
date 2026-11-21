@@ -1,7 +1,6 @@
 /* layout-portal.css - logged-in client navbar + centered content area */
 .portal-header { 
-    background: var(--color-white); 
-    border-bottom: var(--border); 
+    border-bottom: 1px solid rgba(27, 42, 65, 0.08); 
 }
 .portal-header__inner { 
     display: flex;

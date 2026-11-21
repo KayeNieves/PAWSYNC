@@ -250,10 +250,10 @@
   var css = document.createElement('style');
   css.textContent =
     '#ps-toasts{position:fixed;right:16px;bottom:16px;z-index:9999;display:flex;flex-direction:column;gap:8px;max-width:340px}' +
-    '.ps-toast{background:#1B2A41;color:#fff;padding:12px 16px;border-radius:8px;box-shadow:0 8px 20px rgba(27,42,65,.25)}.ps-toast--err{background:#B3261E}' +
+    '.ps-toast{background:rgba(27,42,65,.94);color:#fff;padding:14px 20px;border-radius:16px;box-shadow:0 12px 30px rgba(27,42,65,.3);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);animation:ps-toast-in .45s cubic-bezier(.34,1.56,.64,1) both}.ps-toast--err{background:rgba(179,38,30,.96)}@keyframes ps-toast-in{from{opacity:0;transform:translateY(16px) scale(.94)}to{opacity:1;transform:none}}' +
     '.ps-grid{display:grid;gap:16px;grid-template-columns:repeat(auto-fill,minmax(260px,1fr))}.ps-section{margin-top:24px}' +
-    '.ps-actions{white-space:nowrap}.ps-search{max-width:320px;margin:0 0 16px}.ps-bar{display:flex;gap:8px;align-items:center;flex-wrap:wrap}' +
-    '.ps-reset{margin-top:32px}.ps-hint{margin-top:16px}';
+    '.ps-actions{white-space:nowrap}.ps-bar{display:flex;gap:8px;align-items:center;flex-wrap:wrap}' +
+    '.ps-reset{margin-top:32px}.ps-hint{margin-top:24px}';
   document.head.appendChild(css);
 
   function toast(msg, type) {
@@ -1146,15 +1146,22 @@
   /* ---------- Staff system ---------- */
   function staffCommon() {
     var s = session(),
-      u = $('.topbar__user');
-    if (u) {
-      u.textContent = s.label || s.name;
-      var b = document.createElement('button');
-      b.type = 'button';
-      b.className = 'btn btn--outline btn--small';
-      b.textContent = 'Log out';
-      b.onclick = logout;
-      u.insertAdjacentElement('afterend', b);
+      side = $('.sidebar');
+    if (side && s) {
+      // The signed-in name + Log out now live at the bottom of the sidebar
+      // (they used to repeat as "Clinic Staff" at the top of every panel).
+      var nm = s.label || s.name || 'Clinic Staff',
+        box = document.createElement('div');
+      box.className = 'sidebar__user';
+      box.innerHTML =
+        '<span class="sidebar__avatar" aria-hidden="true">' +
+        esc(String(nm).replace(/^Dr\.\s*/, '').charAt(0).toUpperCase()) +
+        '</span><div class="sidebar__user-text"><p class="sidebar__user-name">' +
+        esc(nm) +
+        '</p><p class="sidebar__user-role">Signed in</p></div>' +
+        '<button type="button" class="sidebar__logout">Log out</button>';
+      $('.sidebar__logout', box).onclick = logout;
+      side.appendChild(box);
     }
     addResetLink();
   }
@@ -1232,9 +1239,18 @@
       'beforeend',
       '<div class="form-actions"><button type="button" class="btn btn--primary" data-save>Save entry</button><button type="button" class="btn btn--outline" data-clear>Clear</button></div>'
     );
+    // Search box (placeholder inside the bar) with the Export button on its right
     $('.table-wrap', tb.closest('section')).insertAdjacentHTML(
       'beforebegin',
-      '<div class="form-group ps-search"><label class="form-group__label" for="ps-search">Search this list</label><input class="form-input" type="search" id="ps-search"></div><p class="ps-bar"><button type="button" class="btn btn--outline btn--small" id="ps-export">Export CSV</button></p>'
+      '<div class="list-toolbar">' +
+        '<div class="search-field">' +
+        '<svg class="search-field__icon icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>' +
+        '<label class="sr-only" for="ps-search">Search this list</label>' +
+        '<input class="form-input" type="search" id="ps-search" placeholder="Search this list" autocomplete="off">' +
+        '</div>' +
+        '<button type="button" class="btn btn--outline btn--small" id="ps-export">' +
+        '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 4v11M7.5 10.5 12 15l4.5-4.5M5 20h14"/></svg>Export CSV</button>' +
+        '</div>'
     );
     var saveBtn = $('[data-save]', fs),
       search = $('#ps-search');
@@ -1671,6 +1687,37 @@
     spy();
   }
 
+  /* ---------- Scroll reveal: boxes fade/rise into view ---------- */
+  function revealOnScroll() {
+    if (
+      !('IntersectionObserver' in window) ||
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    )
+      return;
+    var items = $$('.card, .table-wrap, .list-toolbar, .workspace-tile');
+    var io = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting) {
+            var t = e.target;
+            t.classList.add('is-in');
+            io.unobserve(t);
+            // drop the helper classes afterwards so hover effects work normally
+            setTimeout(function () {
+              t.classList.remove('reveal', 'is-in');
+            }, 800);
+          }
+        });
+      },
+      { threshold: 0.08 }
+    );
+    items.forEach(function (el) {
+      if (el.getBoundingClientRect().top < window.innerHeight) return; // already on screen
+      el.classList.add('reveal');
+      io.observe(el);
+    });
+  }
+
   /* ---------- Start ---------- */
   function init() {
     if (!guard()) return;
@@ -1692,6 +1739,7 @@
       staffTablePage();
       reportExportPage();
     }
+    revealOnScroll();
   }
   window.PawSync = { reset: resetDemo, logout: logout };
   if (document.readyState === 'loading')

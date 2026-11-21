@@ -6,7 +6,7 @@
   <title>Log in or create an account | PawSync</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../css/base.css">
   <link rel="stylesheet" href="../css/components.css">
   <link rel="stylesheet" href="../css/layout-public.css">
@@ -38,14 +38,7 @@
         <h1 class="page-title">Welcome to PawSync</h1>
         <p>Log in to book visits and manage your pet's records, or create an account if you are a new pet owner. Clinic staff also log in here.</p>
 
-        <div class="tabs" role="tablist" aria-label="Account options">
-          <button type="button" role="tab" id="tab-login" class="tabs__tab is-active"
-                  aria-selected="true" aria-controls="panel-login">Log in</button>
-          <button type="button" role="tab" id="tab-register" class="tabs__tab"
-                  aria-selected="false" aria-controls="panel-register" tabindex="-1">Create account</button>
-        </div>
-
-        <div role="tabpanel" id="panel-login" aria-labelledby="tab-login">
+        <div id="panel-login">
           <form class="form" id="login-form" action="#" method="post" novalidate>
             <fieldset class="form-group">
               <legend class="form-group__label">Log in as <span class="form-group__required" aria-hidden="true">*</span></legend>
@@ -74,20 +67,23 @@
               <p class="form-group__error" id="login-password-error" hidden></p>
             </div>
 
-            <div class="form-group">
+            <div class="form-group auth__row">
               <div class="form-check">
                 <input type="checkbox" id="login-show-password" data-toggle-password="login-password">
                 <label for="login-show-password">Show password</label>
               </div>
+              <a href="#">Forgot password?</a>
             </div>
 
-            <p><a href="#">Forgot password?</a></p>
-
-            <button type="submit" class="btn btn--primary">Log in</button>
+            <div class="auth-actions">
+              <button type="submit" class="btn btn--primary">Log in</button>
+              <button type="button" class="btn btn--outline" data-show-panel="register">Create account</button>
+            </div>
           </form>
         </div>
 
-        <div role="tabpanel" id="panel-register" aria-labelledby="tab-register" hidden>
+        <div id="panel-register" hidden>
+          <h2 class="auth__subtitle">Create your account</h2>
           <p>This is for pet owners only. Staff accounts are given by the clinic.</p>
 
           <form class="form" id="register-form" action="#" method="post" novalidate>
@@ -149,7 +145,10 @@
               <p class="form-group__error" id="reg-consent-error" hidden></p>
             </div>
 
-            <button type="submit" class="btn btn--primary">Create account</button>
+            <div class="auth-actions">
+              <button type="submit" class="btn btn--primary">Create account</button>
+              <button type="button" class="btn btn--outline" data-show-panel="login">Back to log in</button>
+            </div>
           </form>
         </div>
       </div>
@@ -170,27 +169,19 @@
 
   <!-- pede imove sa javascript -->
   <script>
-    const tabs = Array.from(document.querySelectorAll('[role="tab"]'));
-
-    function selectTab(selected) {
-      tabs.forEach(function (tab) {
-        const active = tab === selected;
-        tab.setAttribute('aria-selected', active ? 'true' : 'false');
-        tab.tabIndex = active ? 0 : -1;
-        tab.classList.toggle('is-active', active);
-        document.getElementById(tab.getAttribute('aria-controls')).hidden = !active;
+    // Switch between the Log in and Create account forms
+    function showPanel(name) {
+      ['login', 'register'].forEach(function (n) {
+        document.getElementById('panel-' + n).hidden = n !== name;
       });
+      const first = document.querySelector('#panel-' + name + ' input:not([type="radio"])');
+      if (first) first.focus({ preventScroll: true });
+      if (history.replaceState) history.replaceState(null, '', name === 'register' ? '#register' : location.pathname + location.search);
     }
-
-    tabs.forEach(function (tab, i) {
-      tab.addEventListener('click', function () { selectTab(tab); });
-      tab.addEventListener('keydown', function (e) {
-        let next = null;
-        if (e.key === 'ArrowRight') next = tabs[(i + 1) % tabs.length];
-        if (e.key === 'ArrowLeft') next = tabs[(i - 1 + tabs.length) % tabs.length];
-        if (next) { e.preventDefault(); selectTab(next); next.focus(); }
-      });
+    document.querySelectorAll('[data-show-panel]').forEach(function (btn) {
+      btn.addEventListener('click', function () { showPanel(btn.dataset.showPanel); });
     });
+    if (location.hash === '#register') showPanel('register');
 
     document.querySelectorAll('[data-toggle-password]').forEach(function (box) {
       box.addEventListener('change', function () {
